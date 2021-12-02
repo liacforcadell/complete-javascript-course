@@ -1,4 +1,4 @@
-'use strict';       //activates strict mode (makes it easier to write secure (avoid accidental bugs) javascript code)
+'use strict'; //activates strict mode (makes it easier to write secure (avoid accidental bugs) javascript code)
 //IMPORTANT: use strict has to be the very first statement in the script
 
 // let hasDriversLicense = false;
@@ -11,10 +11,6 @@
 // const interface = "Audio"; //reserves words that could be implemented in the future
 
 // const private = 25;
-
-
-
-
 
 // //!!!!FUNCTIONS!!!!!
 
@@ -44,12 +40,10 @@
 // const appleOrangeJuice = fruitProcessor(2,4);
 // console.log(appleOrangeJuice);
 
-
 // //Function declarations vs Expressions
 
 // //FUNCTION DECLARATION
 // //A diferencia del Function Expressions, a estas se le puede llamar antes de que sean declaradas
-
 
 // const age1 = calcAge1(1991);
 // function calcAge1(birthYear) {
@@ -59,15 +53,12 @@
 // }
 // console.log(age1);
 
-
-
 // //FUNCTION EXPRESSION
 // //You write a function without a name
 // //It is also called an anonymous function
 // //Ej Anonymous: function () {}, se debe guardar en una variable o constante cuyo nombre se usa para llamar la funcion anonima.
 // //Ej Not anonymous: function nombre () {}
 // //There is no name after function
-
 
 // //No se les puede llamar antes de que sean declarados
 // const calcAge2 = function (birthYear) {
@@ -76,7 +67,6 @@
 
 // const age2 = calcAge2(1991);
 // console.log(age1, age2);
-
 
 // //ARROW FUNCTION
 
@@ -94,7 +84,6 @@
 
 // console.log(age3);
 
-
 // const yearsUntilRetirement = (birthYear, firstName) => {
 //     const age = 2037 - birthYear;
 //     const retirement = 65 - age;
@@ -103,7 +92,6 @@
 
 // console.log(yearsUntilRetirement(1991, "Jonas"));
 // console.log(yearsUntilRetirement(1980, "Bob"));
-
 
 // //Calling one function inside another function
 
@@ -120,7 +108,6 @@
 // }
 
 // console.log(fruitProcessor(2,3));
-
 
 // //Review Functions
 
@@ -145,9 +132,8 @@
 // console.log(yearsUntilRetirement(1991, "Jonas"));
 // console.log(yearsUntilRetirement(1950, "Mike"));
 
-
 //Resumen FUNCTIONS
-//Function declaration: functions that can be used before its declared 
+//Function declaration: functions that can be used before its declared
 
 //Function expression, a function value stored in a variable (called anonymous functions)
 
@@ -155,7 +141,7 @@
 
 // //CODING CHALLENGE 1
 
-// const calcAverage = (score1, score2, score3) => 
+// const calcAverage = (score1, score2, score3) =>
 // (score1 + score2 + score3) / 3;
 
 // const checkWinner = function (avgDolphins, avgKoalas) {
@@ -177,7 +163,6 @@
 // averageKoalas = calcAverage(23, 34, 27);
 
 // checkWinner(averageDolphins, averageKoalas);
-
 
 // //ARRAYS - Two ways of creating an array
 
@@ -210,7 +195,6 @@
 
 // console.log(lia);
 
-
 // //Excercise
 // const calcAge = function (birthYear) {
 //     return 2037- birthYear;
@@ -230,9 +214,7 @@
 
 // console.log(ages);
 
-
 // //ARRAYS OPERATIONS
-
 
 // //ADD ELEMENTS (2 METHODS)
 // //PUSH method: adds elements to the end of an array
@@ -261,7 +243,6 @@
 // friends.shift();
 // console.log(friends);
 
-
 // //INDEXOF method: tells us in which position a certain element of the arrays is
 // console.log(friends.indexOf('Steven'));
 
@@ -284,7 +265,6 @@
 //     console.log('You have a friend called Steven');
 // }
 
-
 // //Coding Challenge 2
 
 // const calcTip = function (bill) {
@@ -299,12 +279,10 @@
 // const tips = [calcTip(bills[0]), calcTip(bills[1]), calcTip(bills[2])];
 // console.log(tips);
 
-
 // const totals = [bills[0] + tips[0], bills[1] + tips[1], bills[2] + tips[2]];
 // console.log(totals);
 
-// //OBJECTS: 
-
+// //OBJECTS:
 
 // //Example: this is called the object literal sintax
 // const jonas = {
@@ -316,7 +294,6 @@
 // };
 
 // console.log(jonas);
-
 
 // //RETRIEVING DATA FROM AN OBJECT
 // //With a dot
@@ -336,7 +313,6 @@
 //     console.log('Wrong request! Choose between firstName, lastName, age, job, and friends.')
 // }
 
-
 // //ADDING NEW PROPERTIES TO THE OBJECT
 // jonas.location = 'Portugal';
 // jonas['twitter'] = '@jonasmith';
@@ -349,7 +325,6 @@
 // //OBJECT METHODS!!
 //to create object methods you just need to add a function to the object:
 
-
 // const jonas = {
 //     firstName: 'Jonas',
 //     lastName: 'Smith',
@@ -357,7 +332,7 @@
 //     job: 'teacher',
 //     friends: ['Michael', 'Peter', 'Steven'],
 //     hasDriversLicense: true,
-    
+
 //     // calcAge: function(birthYear) {
 //     //     return 2037 - birthYear;
 //     // },
@@ -379,11 +354,9 @@
 // // console.log(jonas.calcAge(jonas.birthYear));
 // // console.log(jonas['calcAge'](1991));
 
-
 // //To use the function, first we need calcAge() to add age property and then we can call directly age property
 // console.log(jonas.calcAge())
 // console.log(jonas.age);
-
 
 // //Challenge
 
@@ -408,7 +381,6 @@
 // console.log(jonas.getSummary());
 
 // //CODING CHALLENGE #3
-
 
 // const mark = {
 //     fullName: "Mark Miller",
@@ -439,13 +411,12 @@
 // }
 
 // //LOOPS
-// //Three parts: initial value of counter, condition, increasing the counter 
+// //Three parts: initial value of counter, condition, increasing the counter
 
 // //For loop keeps running while condition is TRUE
 // for(let rep = 1; rep <= 10; rep++) {
 //     console.log(`Lifting weights repetition ${rep} 🏋️‍♀️`);
 // }
-
 
 // //For Loops for Arrays
 
@@ -478,7 +449,6 @@
 
 // console.log(ages);
 
-
 // //CONTINUE AND BREAK STATEMENTS!!
 
 // //Example: USE OF CONTINUE
@@ -510,7 +480,6 @@
 //     console.log(i, jonas[i]);
 // }
 
-
 // //Example: Loop in Loops
 
 // for(let ex = 1; ex < 4; ex++) {
@@ -519,7 +488,6 @@
 //         console.log(`Lifting weight repetition ${i} 🏋️‍♀️`);
 //     }
 // }
-
 
 // //WHILE LOOP (it is more versitile than the for loop because it really doenst need a number)
 // let i = 1;
@@ -538,7 +506,6 @@
 //     if (dice === 6) console.log(`Loop is about to end....`)
 // }
 
-
 //Coding Challenge #4
 const bills = [22, 295, 176, 440, 37, 105, 10, 1100, 86, 52];
 
@@ -546,26 +513,24 @@ const tips = [];
 const totals = [];
 
 const calcTip = function (bill) {
-    return bill >= 30 && bill <= 300 ? bill * 0.15 : bill * 0.2;
-}
+  return bill >= 30 && bill <= 300 ? bill * 0.15 : bill * 0.2;
+};
 
 for (let i = 0; i < bills.length; i++) {
-    tips.push(calcTip(bills[i]));
-    totals.push(tips[i] + bills[i]);
+  tips.push(calcTip(bills[i]));
+  totals.push(tips[i] + bills[i]);
 }
 
 console.log(`Bills: ${bills}`);
 console.log(`Tips: ${tips}`);
 console.log(`Totals: ${totals}`);
 
-const calcAverage = function(arr) {
-    let acumulador = 0;
-    for (let i = 0; i < arr.length; i++) {
-        acumulador += arr[i]; 
-    }
-    return acumulador / arr.length;
-}
+const calcAverage = function (arr) {
+  let acumulador = 0;
+  for (let i = 0; i < arr.length; i++) {
+    acumulador += arr[i];
+  }
+  return acumulador / arr.length;
+};
 
 console.log(`Totals: ${calcAverage(totals)}`);
-
-

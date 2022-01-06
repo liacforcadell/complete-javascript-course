@@ -188,14 +188,45 @@ const updateUI = function (acc) {
   calcDisplaySummary(acc);
 };
 
+const startLogoutTimer = function () {
+  // Setting time to 5 minutes
+  let time = 300;
+
+  // We separate this function to call it inmediately:
+  const tick = function () {
+    const min = `${Math.floor(time / 60)}`.padStart(2, 0);
+    const sec = `${time % 60}`.padStart(2, 0);
+
+    // In each call, print the remaining time in the UI
+    labelTimer.textContent = `${min}:${sec}`;
+
+    //When 0 seconds, stop timer and logout
+    if (time === 0) {
+      clearInterval(timer);
+      labelWelcome.textContent = 'Log in to get started';
+      containerApp.style.opacity = 0;
+    }
+
+    // Decrease 1 second
+    time--;
+  };
+
+  // Calling tick inmediately: to avoid the 1 second delay when we are calling it for the first time
+  tick();
+
+  // Call the timer every second
+  const timer = setInterval(tick, 1000);
+  return timer;
+};
+
 ///////////////////////////////////////
 // Event handlers
-let currentAccount;
+let currentAccount, timer;
 
 // FAKE ALWAYS LOGGED IN
-currentAccount = account1;
-updateUI(currentAccount);
-containerApp.style.opacity = 100;
+// currentAccount = account1;
+// updateUI(currentAccount);
+// containerApp.style.opacity = 100;
 
 //IMPORTANTE
 // Experimenting with the API
@@ -265,6 +296,9 @@ btnLogin.addEventListener('click', function (e) {
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
 
+    // LogoutTimer
+    if (timer) clearInterval(timer);
+    timer = startLogoutTimer();
     // Update UI
     updateUI(currentAccount);
   }
@@ -292,6 +326,9 @@ btnTransfer.addEventListener('click', function (e) {
     receiverAcc.movementsDates.push(new Date().toISOString());
     // Update UI
     updateUI(currentAccount);
+    //Reset Timer
+    clearInterval(timer);
+    timer = startLogoutTimer();
   }
 });
 
@@ -301,14 +338,17 @@ btnLoan.addEventListener('click', function (e) {
   const amount = Math.floor(inputLoanAmount.value);
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
-    // Add movement
-    currentAccount.movements.push(amount);
-
-    // Add loan date
-    currentAccount.movementsDates.push(new Date().toISOString());
-
-    // Update UI
-    updateUI(currentAccount);
+    setTimeout(function () {
+      // Add movement
+      currentAccount.movements.push(amount);
+      // Add loan date
+      currentAccount.movementsDates.push(new Date().toISOString());
+      // Update UI
+      updateUI(currentAccount);
+      //Reset Timer
+      clearInterval(timer);
+      timer = startLogoutTimer();
+    }, 2500);
   }
   inputLoanAmount.value = '';
   inputLoanAmount.blur();
@@ -677,7 +717,44 @@ const isEven = n => n % 2 === 0;
 // //  TIMERS: setTimeOut and setInterval
 // ///////////////////////////////////////////
 
+// SECCION
+// SetTimeout
 //setTimeout() --> 2 arguments
 // (Callback function, miliseconds until function is called)
-setTimeout(() => console.log('Here is your pizza 🍕'), 3000); //3 seconds
-console.log('Waiting...');
+// setTimeout(() => console.log('Here is your pizza 🍕'), 3000); //3 seconds
+
+// setTimeout(
+//   (ing1, ing2) =>
+//     console.log(`1. Here is your pizza with ${ing1} and ${ing2} 🍕`),
+//   3000,
+//   'olives',
+//   'spinach'
+// ); // Adding arguments to the function
+// console.log('Waiting...');
+
+// // CLEARING TIMEOUT --> deleting timer
+// const ingredients = ['bacon', 'cheese'];
+// const pizzaTimer = setTimeout(
+//   (ing1, ing2) =>
+//     console.log(`2. Here is your pizza with ${ing1} and ${ing2} 🍕`),
+//   3000,
+//   ...ingredients
+// ); // Adding arguments to the function
+// if (ingredients.includes('bacon')) clearTimeout(pizzaTimer);
+
+// SECCION
+// setInterval --> executes every interval
+// const options2 = {
+//   day: 'numeric',
+//   month: 'numeric',
+//   year: 'numeric',
+//   hour: 'numeric',
+//   minute: 'numeric',
+//   second: 'numeric',
+// };
+
+// setInterval(function () {
+//   const now = new Date();
+//   console.log(Intl.DateTimeFormat(navigator.language, options2).format(now));
+//   // console.log(now);
+// }, 1000);

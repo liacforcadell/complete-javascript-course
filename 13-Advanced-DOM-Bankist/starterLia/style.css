@@ -1,5 +1,10 @@
 /* The page is NOT responsive. You can implement responsiveness yourself if you wanna have some fun 😃 */
 
+/* Easy solution to scrolling: */
+/* html {
+  scroll-behavior: smooth;
+} */
+
 :root {
   --color-primary: #5ec576;
   --color-secondary: #ffcb03;

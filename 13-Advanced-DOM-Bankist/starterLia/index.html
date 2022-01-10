@@ -12,6 +12,7 @@
     />
     <link rel="stylesheet" href="style.css" />
     <title>Bankist | When Banking meets Minimalist</title>
+    <script defer src="script.js"></script>
   </head>
   <body>
     <header class="header">
@@ -44,6 +45,8 @@
       </nav>
 
       <div class="header__title">
+        <!-- Adding events with an html attribute is not used anymore -> onClick -->
+        <!-- <h1 onClick="alert('HTML Alert')"></h1> -->
         <h1>
           When
           <!-- Green highlight effect -->
@@ -164,7 +167,7 @@
             </svg>
           </div>
           <h5 class="operations__header">
-            Tranfser money to anyone, instantly! No fees, no BS.
+            Transfer money to anyone, instantly! No fees, no BS.
           </h5>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
@@ -353,6 +356,6 @@
     </div>
     <div class="overlay hidden"></div>
 
-    <script src="script.js"></script>
+    <!-- <script src="script.js"></script> -->
   </body>
 </html>

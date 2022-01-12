@@ -362,43 +362,43 @@ sara.calcAge();
 // CHALLENGE #2
 /////////////////////////////////////////////////
 
-class Car {
-  constructor(make, speed) {
-    this.make = make;
-    this.speed = speed;
-  }
-  accelerate() {
-    this.speed += 10;
-    console.log(this.speed);
-  }
-  breake() {
-    this.speed -= 5;
-    console.log(this.speed);
-  }
+// class Car {
+//   constructor(make, speed) {
+//     this.make = make;
+//     this.speed = speed;
+//   }
+//   accelerate() {
+//     this.speed += 10;
+//     console.log(this.speed);
+//   }
+//   breake() {
+//     this.speed -= 5;
+//     console.log(this.speed);
+//   }
 
-  get speedUS() {
-    return this.speed / 1.6;
-  }
+//   get speedUS() {
+//     return this.speed / 1.6;
+//   }
 
-  set speedUS(speed) {
-    this.speed = speed * 1.6;
-  }
-}
+//   set speedUS(speed) {
+//     this.speed = speed * 1.6;
+//   }
+// }
 
-const car1 = new Car('Ford', 120);
+// const car1 = new Car('Ford', 120);
 
-console.log(car1);
-console.log(car1.speedUS);
-car1.accelerate();
-car1.breake();
-console.log(car1);
+// console.log(car1);
+// console.log(car1.speedUS);
+// car1.accelerate();
+// car1.breake();
+// console.log(car1);
 
-// ATENDER -> GETTER NO SE LLAMA CON ()
-console.log(car1.speedUS);
+// // ATENDER -> GETTER NO SE LLAMA CON ()
+// console.log(car1.speedUS);
 
-// USANDO SETTER
-car1.speedUS = 50;
-console.log(car1);
+// // USANDO SETTER
+// car1.speedUS = 50;
+// console.log(car1);
 
 // SECCION
 /////////////////////////////////////////////////
@@ -448,4 +448,352 @@ console.log(mike instanceof Object);
 // SECCION
 /////////////////////////////////////////////////
 // CHALLENGE #3
+/////////////////////////////////////////////////
+
+const Car = function (make, speed) {
+  this.make = make;
+  this.speed = speed;
+};
+
+Car.prototype.accelerate = function () {
+  this.speed += 10;
+  console.log(this.speed);
+};
+
+Car.prototype.brake = function () {
+  this.speed -= 5;
+  console.log(this.speed);
+};
+
+const EV = function (make, speed, charge) {
+  Car.call(this, make, speed);
+  this.charge = charge;
+};
+
+// Link the prototypes
+EV.prototype = Object.create(Car.prototype);
+// EV.prototype.constructor = EV;
+
+EV.prototype.chargeBattery = function (chargeTo) {
+  this.charge = chargeTo;
+};
+
+EV.prototype.accelerate = function () {
+  this.speed += 20;
+  this.charge--;
+  console.log(
+    `${this.make} going at ${this.speed} km/h, with a charge of ${this.charge}%`
+  );
+};
+
+const tesla = new EV('Tesla', 120, 23);
+tesla.chargeBattery(90);
+tesla.brake();
+tesla.accelerate();
+
+// SECCION
+/////////////////////////////////////////////////
+// INHERITANCE BETWEEN CLASSES: ES6 CLASSES
+/////////////////////////////////////////////////
+
+class PersonFather {
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
+    this.birthYear = birthYear;
+  }
+  //Instance methods:
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  }
+  greet() {
+    console.log(`Hey ${this.fullName}`);
+  }
+  get age() {
+    return 2037 - this.birthYear;
+  }
+  set fullName(name) {
+    if (name.includes(' ')) this._fullName = name;
+    else alert(`${name} is not a fullname`);
+  }
+  get fullName() {
+    return this._fullName;
+  }
+
+  static hey() {
+    console.log('Hey there 😜');
+  }
+}
+
+//Obs: the keyword extends links the prototypes behind the scenes
+class StudentChild extends PersonFather {
+  constructor(fullName, birthYear, course) {
+    //Super() always need to happen first
+    super(fullName, birthYear); //-> super is the constructor function of the parent class. Responsible for creating the this keyword in this subclass
+    this.course = course;
+  }
+  introduce() {
+    console.log(`My name is ${this.fullName} and I study ${this.course}`);
+  }
+  calcAge() {
+    console.log(
+      `I'm ${
+        2037 - this.birthYear
+      } years old, but as a student I feel more like ${
+        2037 - this.birthYear + 10
+      }`
+    );
+  }
+}
+
+//IMPORTANTE
+// If we do not need any new proterties in the child class, the constructor with super() is completely unnecesary. This will still work to add methods. Example:
+class StudentExample extends PersonFather {}
+const alison = new StudentExample('Alison Swift', 1989);
+console.log(alison);
+
+const martha = new StudentChild('Martha Stuart', 2012, 'Computer Science');
+martha.introduce();
+martha.calcAge();
+
+// SECCION
+/////////////////////////////////////////////////
+// INHERITANCE BETWEEN CLASSES: OBJECT.CREATE
+/////////////////////////////////////////////////
+
+const PersonProto2 = {
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  },
+  init(firstName, birthyear) {
+    this.firstName = firstName;
+    this.birthYear = birthyear;
+  },
+};
+
+const caroline = Object.create(PersonProto2);
+
+const StudentProto = Object.create(PersonProto2);
+StudentProto.init = function (firstName, birthYear, course) {
+  PersonProto2.init.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+StudentProto.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}`);
+};
+
+const jay = Object.create(StudentProto);
+jay.init('Jay', 2010, 'Computer Science');
+jay.introduce();
+jay.calcAge();
+
+// _approveLoan(val) {
+//   return true;
+// }
+class Account {
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this.pin = pin;
+    this.movements = [];
+    this.locale = navigator.language;
+    console.log(`Thanks for opening an account, ${owner}`);
+  }
+  // Public interface:
+  deposit(val) {
+    this.movements.push(val);
+  }
+  withdraw(val) {
+    this.deposit(-val);
+  }
+
+  approveLoan(val) {
+    return true;
+  }
+  requestLoan(val) {
+    if (this.approveLoan(val)) {
+      this.deposit(val);
+      console.log('Loan approved');
+    }
+  }
+}
+
+const acc1 = new Account('Jonas', 'EUR', 1111);
+
+// BAD_PRACTICE
+// acc1.movements.push(250);
+// acc1.movements.push(-140);
+//CORRECT better to create methods that interact with the properties of a class
+acc1.deposit(250);
+acc1.withdraw(140);
+acc1.requestLoan(1000);
+// BAD_PRACTICE acc1.approveLoan(1000); in the real world, we shouldn't even been able to access this method.
+
+console.log(acc1);
+
+// SECCION
+///////////////////////////////////////////////////
+// ENCAPSULATION: PROTECTED PROPERTIES AND METHODS
+// 1. Prevents code from outside the class to accidentally manipulate code that is inside the class
+// 2. When we expose only a small API consisting of a few public methods, we can change all the other internal private methods with more confidence. Our code will not break when we make internal changes.
+///////////////////////////////////////////////////
+
+// IMPORTANTE THERE IS STILL NO WAY TO MAKE A CLASS TRULY PRIVATE, but we use a _ in the beggining of the name of the property as a convention.
+// Ex: _movements
+// We call this protected. If a developer sees an undersore, they know that that property its not supposed to be touched outside of the class.
+// we can also add _ to the methods: Ex: _approvedLoan(){}
+
+class AccountPrivate {
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this._pin = pin;
+    // Protected property
+    this._movements = [];
+    this.locale = navigator.language;
+    console.log(`Thanks for opening an account, ${owner}`);
+  }
+  //Protected method:
+  _approveLoan(val) {
+    return true;
+  }
+
+  // Public interface (Public API):
+  getMovements() {
+    return this._movements;
+  }
+
+  deposit(val) {
+    this._movements.push(val);
+  }
+  withdraw(val) {
+    this.deposit(-val);
+  }
+
+  requestLoan(val) {
+    if (this._approveLoan(val)) {
+      this.deposit(val);
+      console.log('Loan approved');
+    }
+  }
+}
+
+const acc2 = new AccountPrivate('Jonas', 'EUR', 1111);
+
+acc2.deposit(250);
+acc2.withdraw(140);
+acc2.requestLoan(1000);
+console.log(acc2.getMovements());
+
+console.log(acc2);
+
+// SECCION
+/////////////////////////////////////////////////
+// ENCAPSULATION: PRIVATE CLASS FIELDS AND METHODS
+// IMPORTANTE
+// IT IS NOT YET IMPLEMENTE IN JS
+// FIELDS must be defined outside the constructor and outside of any method.
+/////////////////////////////////////////////////
+// 1. Public Fields
+// 2. Private Fields
+// 3. Public Methods
+// 4. Private Methods
+//(there is also 4 more versions - static versions of these)
+
+class AccountClassFields {
+  // 1) Public fields (instances)
+  locale = navigator.language; //we need the ;
+  // Obs: these fields are added to the instances, not to the prototypes. The methods are the ones added to the prototypes.
+
+  //2) Private fields (instances):
+  #movements = [];
+  //Example of defining a field when we are recieving an argument in the constructor:
+  #pin;
+
+  // Static public fields:
+  static studyHours = 0;
+
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    //Private field
+    this.#pin = pin;
+    // this._movements = [];
+    // this.locale = navigator.language;
+    console.log(`Thanks for opening an account, ${owner}`);
+  }
+  //Protected method:
+  _approveLoan(val) {
+    return true;
+  }
+
+  // PRIVATE METHOD
+  // IMPORTANTE -> not yet implemented. Chrome just changes this method to a field, and puts it in the instance. So its not really working yet
+  // #approveLoan(val) {
+  //   return true;
+  // }
+
+  // Public interface (Public API):
+  getMovements() {
+    return this.#movements;
+  }
+
+  deposit(val) {
+    this.#movements.push(val);
+    return this;
+  }
+  withdraw(val) {
+    this.deposit(-val);
+    return this;
+  }
+
+  requestLoan(val) {
+    if (this._approveLoan(val)) {
+      this.deposit(val);
+      console.log('Loan approved');
+    }
+    return this;
+  }
+
+  // Static -> only available on the class itself, not on the instances of that class.
+  static helper() {
+    console.log('Helper');
+  }
+}
+
+const acc3 = new AccountClassFields('Jonas', 'EUR', 1111);
+
+acc3.deposit(250);
+acc3.withdraw(140);
+acc3.requestLoan(1000);
+console.log(acc3.getMovements());
+
+console.log(acc3);
+console.log(acc3.getMovements());
+
+//CANNOT ACCESS PRIVATE FIELDS FORM OUTSIDE OF CLASS:
+// console.log(acc3.#movements);
+// console.log(acc3.#pin);
+// console.log(acc3.#approvedLoan(5000));
+
+// STATIC METHOD
+// ERROR
+// acc3.helper();
+// CORRECT
+AccountClassFields.helper();
+
+// SECCION
+/////////////////////////////////////////////////
+// CHAINING METHODS
+/////////////////////////////////////////////////
+// ERROR -> this does not work. The problems is that when we call the first deposit method, this does not return anything (undefined), we cannot call a second method in undefined
+// acc3.deposit(300).deposit(500).withdraw(35).requestLoan(25000).withdraw(4000);
+// CORRECT SOLUTION: -> IN THE METHOD THAT WE DECLARED IN THE CLASS, WE NEED TO RETURN THE SAME ACCOUNT. -> NEED TO ADD -> return this;
+// Adding return this makes sense in methods that set some property.
+acc3.deposit(300).deposit(500).withdraw(35).requestLoan(25000).withdraw(4000);
+console.log(acc3.getMovements());
+
+// SECCION
+/////////////////////////////////////////////////
+// ES6 CLASSES SUMMARY
 /////////////////////////////////////////////////
